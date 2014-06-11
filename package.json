@@ -1,0 +1,37 @@
+{
+  "name": "liverate",
+  "version": "1.0.1",
+  "description": "A node.js wrapper for Livarate API.",
+  "author": {
+    "name": "Enda Xue",
+    "email": "xueenda@gmail.com",
+    "url": "http://rate.kagogo.co"
+  },
+  "main": "liverate.js",
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/xueenda/liverate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/xueenda/liverate/issues"
+  },
+  "engines": {
+    "node": ">= 0.8.2"
+  },
+  "dependencies": {
+    "request": "2.34.0",
+    "extend":"1.2.1",
+    "sort-object":"0.0.6"
+  },
+  "homepage": "http://github.com/xueenda/liverate.git",
+  "keywords": [
+    "liverate",
+    "rating",
+    "feedback",
+    "review"
+  ],
+  "readme": "",
+  "readmeFilename": "README.md",
+  "_id": "liverate@1.0.1",
+  "_from": "liverate@1.0.1"
+}
