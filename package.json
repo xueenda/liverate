@@ -21,7 +21,8 @@
   "dependencies": {
     "request": "2.34.0",
     "extend":"1.2.1",
-    "sort-object":"0.0.6"
+    "sort-object":"0.0.6",
+    "querystring":"0.2.0"
   },
   "homepage": "http://github.com/xueenda/liverate.git",
   "keywords": [

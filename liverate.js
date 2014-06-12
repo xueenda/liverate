@@ -4,6 +4,7 @@ var request = require('request')
   , sort = require('sort-object')
   , crypto = require('crypto')
   , extend = require('extend')
+  , queryString = require('querystring')
 
 var LIVERATE_API_ROOT = 'http://rate.kagogo.co/v1/'
 
@@ -21,83 +22,103 @@ Liverate.prototype = {
   /** 
    * Save the rate of an Object
    */ 
-  saveRate: function(req, callback){
-    var uri = 'rate/save'
-    this._call(req, uri, callback)
+  saveRate: function(query, callback){
+    var params = {
+      uri: 'rate/save',
+      query: query,
+      method: 'POST' 
+    }
+    this._call(params, callback)
   },
 
   /** 
    * Get the rates of an Object
    */ 
-  getRate: function(req, callback){
-    var uri = 'rate/get'
-    this._call(req, uri, callback)
+  getRate: function(query, callback){
+    var params = {
+      uri: 'rate/get',
+      query: query,
+      method: 'GET' 
+    }
+    this._call(params, callback)
   },
 
   /** 
    * Save the feedback of an Object
    */ 
-  saveFeedback: function(req, callback){
-    var uri = 'feedback/save'
-    this._call(req, uri, callback)
+  saveFeedback: function(query, callback){
+    var params = {
+      uri: 'feedback/save',
+      query: query,
+      method: 'POST' 
+    }
+    this._call(params, callback)
   },
 
   /** 
    * Get the feedbacks of an Object
    */ 
-  getFeedbacks: function(req, callback){
-    var uri = 'feedback/get'
-    this._call(req, uri, callback)
+  getFeedbacks: function(query, callback){
+    var params = {
+      uri: 'feedback/get',
+      query: query,
+      method: 'GET' 
+    }
+    this._call(params, callback)
   },
 
   /** 
    * Get the list of Objects
    */ 
-  listObjects: function(req, callback){
-    var uri = 'object/list'
-    this._call(req, uri, callback)
-  },
-
-  /**
-   * Generate signature
-   */
-  _generateSignature: function(req){
-    var AppSecret = this.secret
-    var token = [this.key, this.timestamp, this.secret].join('&')
-
-    var parameters = {}
-    // Combine http GET POST together
-    extend(parameters, req.query, req.body) 
-    //console.log(req)
-    var requestObject = {
-      url: this.url,
-      method: req.method,
-      parameters: parameters,
-      headers: {auth_api:this.key, auth_timestamp:this.timestamp}
+  listObjects: function(query, callback){
+    var params = {
+      uri: 'object/list',
+      query: query,
+      method: 'GET' 
     }
-    return buildSignature(requestObject, token)
+    this._call(params, callback)
   },
 
   /**
    * Call the actual API
    */
-  _call: function(req, uri, callback){
+  _call: function(params, callback){
     this.timestamp = new Date().getTime()
-    this.url = LIVERATE_API_ROOT+uri+ (req._parsedUrl.query && req.method == 'GET' ? '?'+req._parsedUrl.query:'')
+    this.url = LIVERATE_API_ROOT + params.uri + (params.method == 'GET' ? '?' + queryString.stringify(params.query) : '')
 
     var options = {
       url: this.url,
-      method: req.method,
+      method: params.method,
       headers: {
         'API' : this.key,
         'TIMESTAMP': this.timestamp,
-        'SIGNATURE': this._generateSignature(req)
+        'SIGNATURE': this._generateSignature(params)
       }
+    }
+    if(params.method == 'POST'){
+      options.headers['content-type'] = 'application/x-www-form-urlencoded'
+      options.body = queryString.stringify(params.query)
     }
 
     request(options, function(error, response, body) {
       parser(error, response, body, callback)
     })
+  },
+
+  /**
+   * Generate signature
+   */
+  _generateSignature: function(params){
+    var AppSecret = this.secret
+    var token = [this.key, this.timestamp, this.secret].join('&')
+
+    var requestObject = {
+      url: this.url,
+      method: params.method,
+      parameters: params.query,
+      headers: {auth_api:this.key, auth_timestamp:this.timestamp}
+    }
+    return buildSignature(requestObject, token)
   }
 }
 
