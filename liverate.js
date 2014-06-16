@@ -1,4 +1,4 @@
-'use strict';
+"use strict"
 
 var request = require('request')
   , sort = require('sort-object')
@@ -47,6 +47,7 @@ Liverate.prototype = {
    * Save the feedback of an Object
    */ 
   saveFeedback: function(query, callback){
+
     var params = {
       uri: 'feedback/save',
       query: query,
@@ -95,9 +96,12 @@ Liverate.prototype = {
         'SIGNATURE': this._generateSignature(params)
       }
     }
+
     if(params.method == 'POST'){
-      options.headers['content-type'] = 'application/x-www-form-urlencoded'
-      options.body = queryString.stringify(params.query)
+      for(var key in params.query){
+        params.query[key] = decodeURIComponent(params.query[key])
+      }
+      options.form = params.query
     }
 
     request(options, function(error, response, body) {
@@ -118,6 +122,7 @@ Liverate.prototype = {
       parameters: params.query,
       headers: {auth_api:this.key, auth_timestamp:this.timestamp}
     }
+
     return buildSignature(requestObject, token)
   }
 }
@@ -133,7 +138,7 @@ function parser(error, response, body, callback) {
   if (!error && response.statusCode == 200)
     callback(error, JSON.parse(body)) 
   else
-    callback(error)
+    callback(error+' '+response.statusCode+': '+response.statusMessage)
 }
 
 /**
