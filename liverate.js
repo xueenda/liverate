@@ -138,7 +138,7 @@ function parser(error, response, body, callback) {
   if (!error && response.statusCode == 200)
     callback(error, JSON.parse(body)) 
   else
-    callback(error+' '+response.statusCode+': '+response.statusMessage)
+    callback(error+' '+response)
 }
 
 /**
