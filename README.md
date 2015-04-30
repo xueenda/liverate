@@ -6,7 +6,7 @@ http://rate.kagogo.co
 
 This is an API wrapper for live rating and feedback system hosted on http://rate.kagogo.co/v1/
 
-API WIKI page
+API Wiki
 
 https://github.com/xueenda/liverate/wiki
 
