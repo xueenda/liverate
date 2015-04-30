@@ -2,6 +2,7 @@
 
 /**
  * API wrapper for Live Rating System
+ * 
  * @author Enda Xue <xueenda@gmail.com>
  */
 
@@ -19,6 +20,7 @@ var LIVERATE_API_ROOT = 'http://rate.kagogo.co/v1/'
 
 /**
  * Initialize the Liverate class
+ * 
  * @param {string} key
  * @param {string} secret
  */
@@ -61,7 +63,6 @@ Liverate.prototype = {
    * Save the feedback of an Object
    */ 
   saveFeedback: function(query, callback){
-
     var params = {
       uri: 'feedback/save',
       query: query,
@@ -96,6 +97,7 @@ Liverate.prototype = {
 
   /**
    * Call the actual API
+   * 
    * @param {object} params
    */
   _call: function(params, callback){
@@ -144,6 +146,7 @@ Liverate.prototype = {
 
 /**
  * Parser for the result
+ * 
  * @param {string} error
  * @param {object} response
  * @param {string} body
@@ -157,7 +160,8 @@ function parser(error, response, body, callback) {
 }
 
 /**
- * Parser for the result
+ * Build the signature
+ * 
  * @param {object} request
  * @param {string} token
  * @return {string} signature
