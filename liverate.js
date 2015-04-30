@@ -1,5 +1,14 @@
 "use strict"
 
+/**
+ * API wrapper for Live Rating System
+ * @author Enda Xue <xueenda@gmail.com>
+ */
+
+/**
+ * Module dependencies.
+ */
+ 
 var request = require('request')
   , sort = require('sort-object')
   , crypto = require('crypto')
@@ -8,6 +17,11 @@ var request = require('request')
 
 var LIVERATE_API_ROOT = 'http://rate.kagogo.co/v1/'
 
+/**
+ * Initialize the Liverate class
+ * @param {string} key
+ * @param {string} secret
+ */
 function Liverate(key, secret){
   if (!(this instanceof Liverate)) {
     return new Liverate(key, secret);
@@ -82,6 +96,7 @@ Liverate.prototype = {
 
   /**
    * Call the actual API
+   * @param {object} params
    */
   _call: function(params, callback){
     this.timestamp = new Date().getTime()
@@ -129,10 +144,10 @@ Liverate.prototype = {
 
 /**
  * Parser for the result
- * @params {string} error
- * @params {string} response
- * @params {string} body
- * @params {function} callback
+ * @param {string} error
+ * @param {object} response
+ * @param {string} body
+ * @param {function} callback
  */
 function parser(error, response, body, callback) {
   if (!error && response.statusCode == 200)
@@ -143,8 +158,8 @@ function parser(error, response, body, callback) {
 
 /**
  * Parser for the result
- * @params {object} request
- * @params {string} token
+ * @param {object} request
+ * @param {string} token
  * @return {string} signature
  */
 function buildSignature(request, token){
