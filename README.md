@@ -4,9 +4,12 @@ Apply the API KEY AND API SECRET please go to
 
 http://rate.kagogo.co
 
-
 This is an API wrapper for live rating and feedback system hosted on http://rate.kagogo.co/v1/
 
-Server may be down due to openshift free plan server.
+API WIKI page
 
-e.g. http://rate.kagogo.co/v1/rate/get
+https://github.com/xueenda/liverate/wiki
+
+e.g. Get a rate of an object
+
+http://rate.kagogo.co/v1/rate/get
