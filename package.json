@@ -5,7 +5,7 @@
   "author": {
     "name": "Enda Xue",
     "email": "xueenda@gmail.com",
-    "url": "http://rate.kagogo.co"
+    "url": "http://rate.kagogo.co",
   },
   "main": "liverate.js",
   "repository": {
